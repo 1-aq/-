@@ -15,6 +15,7 @@
 import Asids from "@/layin/Asids.vue";
 import Header from "@/layin/Header.vue";
 import Main from "@/layin/Main.vue";
+import { MenuList } from "@/api/loginList.js";
 
 export default {
   data() {
@@ -23,16 +24,22 @@ export default {
   // 计算属性
   computed: {},
   // 载入后生命周期函数
-  mounted() {
-  },
+  mounted() {},
   // 监听属性
   watch: {},
   // 使用data属性里面的方法
   methods: {
-   
+    async getMenuList() {
+      const res = await MenuList();
+      console.log(res);
+    },
   },
   // 创建后
-  created() {},
+  created() {
+    // this.tab();
+    console.log(1);
+    this.getMenuList();
+  },
   components: {
     Asids,
     Header,

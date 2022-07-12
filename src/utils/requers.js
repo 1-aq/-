@@ -1,13 +1,20 @@
 import axios from "axios";
 import { Message } from "element-ui";
+import { getItem } from "../utils/storage";
 const instance = axios.create({
   baseURL: "http://zh.9yuecloud.com/api",
-  timeout: 2000,
+  timeout: 10000,
 });
 
 // 添加请求拦截器
 instance.interceptors.request.use(
   function (config) {
+    console.log(config);
+    const token = getItem("token");
+    // console.log("token===>", token);
+    if (token) {
+      config.headers.token = token;
+    }
     // 在发送请求之前做些什么
     return config;
   },
@@ -24,6 +31,8 @@ instance.interceptors.response.use(
     const {
       data: { data, msg, code },
     } = response;
+    console.log(response);
+
     if (code === 200) {
       return data;
     } else {

@@ -14,10 +14,9 @@ export const LoginList = (data) => {
   });
 };
 
-// export const MenuList = (data) => {
-//   return request({
-//     url: "",
-//     method: "GET",
-//     data,
-//   });
-// };
+export const MenuList = () => {
+  return request({
+    url: "/menu/list",
+    method: "GET"
+  });
+};

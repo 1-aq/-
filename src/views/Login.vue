@@ -50,8 +50,9 @@
   </div>
 </template>
 <script>
-import { CapLogin, LoginList } from "@/api/loginList.js";
+import { CapLogin, LoginList,MenuList } from "@/api/loginList.js";
 // import { login } from "@/api/loginList.js";
+import { Message } from 'element-ui';
 import { mapActions } from "vuex";
 export default {
   name: "login",
@@ -126,12 +127,16 @@ export default {
         if (!token) return;
         this.loading = true;
         this.$router.push("/");
+        Message.success('登录成功')
+
       } catch (error) {
         console.log(error);
       }
+      this.loading=false
     },
     ...mapActions({
       LoginList: "user/LoginList",
+      // MenuList: "user/MenuList"
     }),
   },
   // 创建后

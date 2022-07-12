@@ -18,7 +18,6 @@
   </div>
 </template>
 <script>
-// import { MenuList } from "@/api/loginList.js";
 export default {
   data() {
     return {};
@@ -31,15 +30,11 @@ export default {
   watch: {},
   // 使用data属性里面的方法
   methods: {
-    //  async tab(){
-    //   const res = await MenuList()
-    //   console.log(res);
-    // }
+
   },
   // 创建后
   created() {
-    // this.tab()
-    // console.log(1);
+   
   },
 };
 </script>

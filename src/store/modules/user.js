@@ -1,4 +1,4 @@
-import { LoginList } from "@/api/loginList.js";
+import { LoginList, MenuList } from "@/api/loginList.js";
 import { setItem, getItem } from "@/utils/storage";
 export default {
   namespaced: true,
@@ -18,5 +18,8 @@ export default {
       commit("setToken", token);
       return token;
     },
+    // async MenuList({ commit },data) {
+    //   console.log(data);
+    // },
   },
 };
