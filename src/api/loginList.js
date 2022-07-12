@@ -13,3 +13,11 @@ export const LoginList = (data) => {
     data,
   });
 };
+
+// export const MenuList = (data) => {
+//   return request({
+//     url: "",
+//     method: "GET",
+//     data,
+//   });
+// };

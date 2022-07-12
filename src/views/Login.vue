@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="login">
     <div class="home">
       <h2>欢迎登录</h2>
       <el-form ref="form" :rules="rules" :model="LoginModel">
@@ -35,13 +35,15 @@
                 margin-left: 10px;
                 cursor: pointer;
               "
+              @click="GetImg()"
             />
           </div>
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="add">立即创建</el-button>
-          <el-button>取消</el-button>
+          <el-button class="dl" type="danger" :loading="loading" @click="add">{{
+            loading ? "登录中..." : "立刻登录"
+          }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -49,10 +51,13 @@
 </template>
 <script>
 import { CapLogin, LoginList } from "@/api/loginList.js";
+// import { login } from "@/api/loginList.js";
+import { mapActions } from "vuex";
 export default {
   name: "login",
   data() {
     return {
+      loading: false,
       ImgList: "",
       LoginModel: {
         username: "duck",
@@ -89,26 +94,54 @@ export default {
   // 计算属性
   computed: {},
   // 载入后生命周期函数
-  mounted() {},
+  mounted() {
+    this.GetImg();
+  },
   // 监听属性
   watch: {},
   // 使用data属性里面的方法
   methods: {
-    async add() {
-      const res = await CapLogin(this.LoginModel);
-      this.ImgList = res.data.data.captchaImg;
-      this.token = res.data.data.token;
-      console.log(res);
+    // 获取img
+    async GetImg() {
+      const { captchaImg, token } = await CapLogin(this.LoginModel);
+      this.ImgList = captchaImg;
+      console.log(token);
+      this.LoginModel.token = token;
     },
+    // 登录验证
+    async add() {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.submitForm();
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    // 登录提交
+    async submitForm() {
+      try {
+        var token = await this.LoginList(this.LoginModel);
+        if (!token) return;
+        this.loading = true;
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    ...mapActions({
+      LoginList: "user/LoginList",
+    }),
   },
   // 创建后
   created() {
-    // this.CapLogin()
+    this.GetImg();
   },
 };
 </script>
 <style lang="scss">
-.app {
+.login {
   width: 100%;
   height: 100vh;
   background: url("@/assets/微信图片_20220711203628.jpg") no-repeat;
@@ -131,5 +164,8 @@ export default {
 .t {
   display: flex;
   align-items: center;
+}
+.dl {
+  width: 100%;
 }
 </style>

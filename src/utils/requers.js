@@ -2,7 +2,7 @@ import axios from "axios";
 import { Message } from "element-ui";
 const instance = axios.create({
   baseURL: "http://zh.9yuecloud.com/api",
-  timeout: 5000,
+  timeout: 2000,
 });
 
 // 添加请求拦截器
